@@ -1,19 +1,9 @@
-import os
 from flask import Flask
-from flask_login import LoginManager, current_user
-from flask_uploads import DOCUMENTS, IMAGES, TEXT, UploadSet, configure_uploads
 from flask_cors import CORS
-from werkzeug.utils import secure_filename
-from werkzeug.datastructures import  FileStorage
-from datetime import timedelta
+from flask_socketio import SocketIO, emit
+from flask_session import Session
 
-from App.database import init_db
 from App.config import config
-
-from App.controllers import (
-    setup_jwt,
-    setup_flask_login
-)
 
 from App.views import views
 
@@ -28,20 +18,22 @@ def configure_app(app, config, overrides):
         else:
             app.config[key] = config[key]
 
+socketio = SocketIO()
+
 def create_app(config_overrides={}):
     app = Flask(__name__, static_url_path='/static')
+    socketio.init_app(app)
     configure_app(app, config, config_overrides)
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.config['SEVER_NAME'] = '0.0.0.0'
     app.config['PREFERRED_URL_SCHEME'] = 'https'
     app.config['UPLOADED_PHOTOS_DEST'] = "App/uploads"
+    # This means that the session cookies won’t expire when the browser closes
+    app.config["SESSION_PERMANENT"] = True
+    # This means that the cookies are going to be stored locally on the server-side
+    app.config["SESSION_TYPE"] = "filesystem"
+    Session(app)
     CORS(app)
-    photos = UploadSet('photos', TEXT + DOCUMENTS + IMAGES)
-    configure_uploads(app, photos)
     add_views(app)
-    init_db(app)
-    setup_jwt(app)
-    setup_flask_login(app)
     app.app_context().push()
     return app
