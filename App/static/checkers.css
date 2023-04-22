@@ -1,9 +1,30 @@
 #myBoard {
     width: 100%;
+    margin-top: 45px;
+}
+
+.cell {
+    height: 60px;
+    width: 60px;
+    border: 1.5px solid grey;
+    border-style: inset;
+}
+
+.blackcell {
+    background-color: black;
+}
+
+.whitecell {
+    background-color: white;
 }
 
 @media screen and (max-width: 600px) {
+    .cell {
+        height: 40px;
+        width: 40px;
+    }
     #myBoard {
+        margin-top: 0px;
         width: 300px !important;
     }
 }

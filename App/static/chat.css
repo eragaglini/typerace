@@ -3,12 +3,18 @@ textarea {
     height: 80%;
 }
 
+@media screen and (min-width: 600px) {
+    #game-content {
+        height: 600px;
+    }
+}
+
 @media screen and (max-width: 600px) {
     #chat-content {
         height: 400px;
     }
     textarea {
         margin-top: 20px;
-        height: 60%;
+        height: 50%;
     }
 }
