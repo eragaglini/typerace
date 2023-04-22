@@ -13,19 +13,15 @@
     <!-- Main content -->
     <div class="row" id="main-content" style="margin-top: 20px;">
         <!-- game content-->
-        <div class="border row col-md-9 boxlayout">
+        <div class="border row col-md-9 boxlayout" id="game-content">
             {% block game_content %}{% endblock %}
         </div>
 
         <!-- chat -->
-        <div class="border row col-md-3 boxlayout">
-            <div id="chat">
-                <div id="message"></div>
-                <div id="text">
-                  <textarea rows='1'></textarea>
-                </div><br><br>
-                <a href="#" onclick="leave_room();">Leave this room</a>
-            </div>
+        <div class="border row col-md-3 boxlayout" id="chat-content">
+            <textarea id="chat"></textarea><br><br>
+            <input id="text" placeholder="Enter your message here"><br><br>
+            <a href="#" onclick="leave_room();">Leave this room</a>
         </div>
     </div>
 
