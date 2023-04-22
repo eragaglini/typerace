@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block head_js %}
+    <!-- main.js file -->
+    <script src = "{{ url_for('static', filename='chat.js') }}" defer>
+    </script>  
+{% endblock %}
+
+{% block content %}
+    
+    <div class="container-fluid content" id="game_room_content">
+        <!-- Main content -->
+        <div class="row app-main-content border-bottom" id="main-content">
+            <!-- game content-->
+            <div class="col-lg-9 song-content">
+                {% block game_content %}{% endblock %}
+            </div>
+
+            <!-- chat -->
+            <div class="col border-left bg-light chat">
+                <h1>Flask-SocketIO-Chat: {{ room }}</h1>
+                <textarea id="chat" cols="80" rows="20"></textarea><br><br>
+                <input id="text" size="80" placeholder="Enter your message here"><br><br>
+                <a href="#" onclick="leave_room();">Leave this room</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

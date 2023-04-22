@@ -1,20 +1,21 @@
 
 var socket;
 function main () {
-    console.log("caricato main.js")
     socket = io.connect('http://' + location.hostname + ':' + location.port + '/chat');
     socket.on('connect', function() {
         socket.emit('joined', {});
     });
+    var text_input = document.getElementById('text');
+    var chat = document.getElementById('chat');
+
     socket.on('status', function(data) {
-        $('#chat').val($('#chat').val() + '<' + data.msg + '>\n');
-        $('#chat').scrollTop($('#chat')[0].scrollHeight);
+        chat.value = chat.value + '<' + data.msg + '>\n';
+        chat.scrollTop = chat.scrollHeight;
     });
     socket.on('message', function(data) {
-        $('#chat').val($('#chat').val() + data.msg + '\n');
-        $('#chat').scrollTop($('#chat')[0].scrollHeight);
+        chat.value = chat.value + '<' + data.msg + '>\n';
+        chat.scrollTop = chat.scrollHeight;
     });
-    var text_input = document.getElementById('text');
     text_input.addEventListener('keydown', function(e) {
         var code = e.keyCode || e.which;
         if (code == 13) {
