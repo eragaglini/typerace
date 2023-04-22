@@ -6,12 +6,12 @@
 
 {% block content %}
 
-
-    <body>
-        <h1>Flask-SocketIO-Chat: {{ room }}</h1>
-        <textarea id="chat" cols="80" rows="20"></textarea><br><br>
-        <input id="text" size="80" placeholder="Enter your message here"><br><br>
-        <a href="#" onclick="leave_room();">Leave this room</a>
-    </body>
+    <h1>Flask-SocketIO-Chat</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.name.label }}: {{ form.name() }} {% for error in form.name.errors %}{{ error }}{% endfor %}<br>
+        {{ form.room.label }}: {{ form.room() }} {% for error in form.room.errors %}{{ error }}{% endfor %}<br>
+        {{ form.submit() }}
+    </form>
 
 {% endblock %}

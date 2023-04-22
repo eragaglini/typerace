@@ -1,6 +1,7 @@
 
 var socket;
-$(document).ready(function(){
+function main () {
+    console.log("caricato main.js")
     socket = io.connect('http://' + location.hostname + ':' + location.port + '/chat');
     socket.on('connect', function() {
         socket.emit('joined', {});
@@ -13,15 +14,16 @@ $(document).ready(function(){
         $('#chat').val($('#chat').val() + data.msg + '\n');
         $('#chat').scrollTop($('#chat')[0].scrollHeight);
     });
-    $('#text').keypress(function(e) {
+    var text_input = document.getElementById('text');
+    text_input.addEventListener('keydown', function(e) {
         var code = e.keyCode || e.which;
         if (code == 13) {
-            text = $('#text').val();
-            $('#text').val('');
+            text = text_input.value;
+            text_input.value = '';
             socket.emit('text', {msg: text});
         }
     });
-});
+};
 function leave_room() {
     socket.emit('left', {}, function() {
         socket.disconnect();
@@ -30,3 +32,4 @@ function leave_room() {
         window.location.href = "{{ url_for('main.index') }}";
     });
 }
+document.addEventListener("DOMContentLoaded", main);
