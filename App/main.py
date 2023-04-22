@@ -1,11 +1,10 @@
 from flask import Flask
 from flask_cors import CORS
-from flask_socketio import SocketIO, emit
-from flask_session import Session
 
 from App.config import config
 
 from App.views import views
+from App.events import socketio
 
 
 def add_views(app):
@@ -21,7 +20,7 @@ def configure_app(app, config, overrides):
             app.config[key] = config[key]
 
 
-socketio = SocketIO()
+#socketio = SocketIO()
 
 
 def create_app(config_overrides={}):
@@ -36,7 +35,6 @@ def create_app(config_overrides={}):
     app.config["SESSION_PERMANENT"] = True
     # This means that the cookies are going to be stored locally on the server-side
     app.config["SESSION_TYPE"] = "filesystem"
-    Session(app)
     CORS(app)
     add_views(app)
     app.app_context().push()
