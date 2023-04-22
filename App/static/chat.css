@@ -1,0 +1,46 @@
+body {
+background: lightgray;
+}
+
+#contents {
+position: absolute;
+left:   0;
+top:    0;
+right:  0;
+bottom: 0;
+margin: auto;
+width:  250px;
+height: 350px;
+border: 1px solid gray;
+}
+
+#chat {
+display: flex;
+flex-direction: column;
+height: 100%;
+}
+
+#message {
+flex: 1;
+background-color: #cce;
+}
+
+#text {
+margin: 0;
+padding: 10px 10px;
+width: 230px;
+height: 20px;
+border-top: 1px solid gray;
+background-color: #eee;
+}
+
+textarea {  
+overflow: hidden;
+margin:  0;
+padding: 0;
+border:  0;
+outline: 0;
+width: 100%;
+font-size: 20px;
+resize: none;
+}
