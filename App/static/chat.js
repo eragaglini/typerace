@@ -1,4 +1,3 @@
-
 var socket;
 function main () {
     socket = io.connect('http://' + location.hostname + ':' + location.port + '/chat');

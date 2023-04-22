@@ -2,3 +2,13 @@ textarea {
     margin-top: 20px;
     height: 80%;
 }
+
+@media screen and (max-width: 600px) {
+    #chat-content {
+        height: 400px;
+    }
+    textarea {
+        margin-top: 20px;
+        height: 60%;
+    }
+}
