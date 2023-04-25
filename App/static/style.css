@@ -1,0 +1,10 @@
+html,
+body,
+.wrapp {
+  height: 100%;
+}
+
+body {
+  background: #aaa;
+  margin: 0;
+}

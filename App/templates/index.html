@@ -1,11 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Potential Eureka{% endblock %}
-{% block page %}Potential Eureka{% endblock %}
-
-{{ super() }}
-
 {% block content %}
-
     <h1>Flask-SocketIO-Chat</h1>
     <form method="POST">
         {{ form.hidden_tag() }}
@@ -13,5 +7,4 @@
         {{ form.room.label }}: {{ form.room() }} {% for error in form.room.errors %}{{ error }}{% endfor %}<br>
         {{ form.submit() }}
     </form>
-
 {% endblock %}

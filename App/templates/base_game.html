@@ -1,28 +1,22 @@
 {% extends 'layout.html' %}
-
 {% block head_js %}
-    <!-- chat.js file -->
-    <script src = "{{ url_for('static', filename='chat.js') }}" defer>
-    </script>  
-    <!-- chat.css file-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
+<script src="{{url_for('static', filename='chat.js')}}"></script>
 {% endblock %}
 
 {% block content %}
-    
-    <!-- Main content -->
-    <div class="row" id="main-content" style="margin-top: 20px;">
-        <!-- game content-->
-        <div class="border row col-md-9 boxlayout" id="game-content">
-            {% block game_content %}{% endblock %}
-        </div>
 
-        <!-- chat -->
-        <div class="border row col-md-3 boxlayout" id="chat-content">
-            <textarea id="chat"></textarea><br><br>
-            <input id="text" placeholder="Enter your message here"><br><br>
-            <a href="#" onclick="leave_room();">Leave this room</a>
-        </div>
+
+<div class="row">
+    <div class="col-md-8">
+        {% block game_content %}{% endblock %}
     </div>
+    <div class="col-md-4">
+        <!--<h1>Flask-SocketIO-Chat: {{ room }}</h1>-->
+        <textarea id="chat" cols="80" rows="20"></textarea><br><br>
+        <input id="text" size="80" placeholder="Enter your message here"><br><br>
+        <a href="#" class="btn btn-info" onclick="leave_room();" role="button">Leave this room</a>
+    </div>
+</div>
+
 
 {% endblock %}

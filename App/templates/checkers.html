@@ -1,16 +1,14 @@
 {% extends 'base_game.html' %}
-
 {% block head_js %}
-    {{ super() }}
-    <!-- checkers css styling -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='checkers.css') }}">
-    <!-- chckers.js file -->
-    <script src = "{{ url_for('static', filename='checkers.js') }}" defer>
-    </script>
+{{ super() }}		
+<link rel="stylesheet" href="{{url_for('static', filename='checkers.css')}}"></link>
+<script src="{{url_for('static', filename='checkers.js')}}"></script>
 {% endblock %}
 
 {% block game_content %}
 
-<div id="myBoard"></div>
+<div class="wrapp">
+    <div class="chess"></div>
+</div>
 
 {% endblock %}
