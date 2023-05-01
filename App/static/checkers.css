@@ -6,11 +6,12 @@
 
 .chess {
   width: 480px;
+  height: 480px;
 }
 
 .odd, .even {
-  width: 60px;
-  height: 60px;
+  width: 12.5%;
+  height: 12.5%;
   float: left;
 }
 
@@ -20,4 +21,13 @@
 
 .even {
   background: black;
+}
+
+/* On screens that are 600px or less */
+@media screen and (max-width: 600px) {
+  
+  .chess {
+    width: 320px !important;
+    height: 320px !important;
+  }
 }

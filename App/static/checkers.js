@@ -23,10 +23,9 @@ var createChessBoard = function(x, y) {
     }
   
     chess.appendChild(domFragment);
-    chess.style.width = boardWidth * 60 + 'px';
-  }
+}
   
 document.addEventListener("DOMContentLoaded", function() {
     console.log( "ready!" );
     createChessBoard();
-  });
+});
