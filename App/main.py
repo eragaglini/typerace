@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
+from flask_bootstrap import Bootstrap
 
 from App.config import config
 from App.views import views
@@ -26,6 +27,7 @@ def create_app(config_overrides={}):
     app.config["TEMPLATES_AUTO_RELOAD"] = True
     app.config["SEVER_NAME"] = "0.0.0.0"
     app.config["PREFERRED_URL_SCHEME"] = "https"
+    bootstrap = Bootstrap(app)
     CORS(app)
     add_views(app)
     app.app_context().push()

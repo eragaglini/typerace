@@ -1,10 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Flask-SocketIO-Chat</h1>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        {{ form.name.label }}: {{ form.name() }} {% for error in form.name.errors %}{{ error }}{% endfor %}<br>
-        {{ form.room.label }}: {{ form.room() }} {% for error in form.room.errors %}{{ error }}{% endfor %}<br>
-        {{ form.submit() }}
-    </form>
+<h1 class=" h-100 d-flex justify-content-center align-items-center">
+Please Choose an Option:
+</h1>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <a href="/create-room">
+        <button class="btn btn-primary btn-md">Create Room</button>
+    </a>
+
+    <a href="/join">
+        <button class="btn btn-primary btn-md">Join</button>
+    </a>
+    <a href="/server-browser">
+        <button class="btn btn-primary btn-md">Browse Rooms</button>
+    </a>
+</div>
 {% endblock %}

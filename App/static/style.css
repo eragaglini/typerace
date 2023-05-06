@@ -5,13 +5,16 @@ body,
 }
 
 body {
-  background: #aaa;
   margin: 0;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 991px) {
   /* … */
 	#chat {
-		margin-top: 10px;
+		margin-top: 30px;
 	}
+}
+
+.btn {
+  margin: 5px;
 }

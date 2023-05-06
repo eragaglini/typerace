@@ -1,26 +1,30 @@
 from flask import Blueprint, session, redirect, url_for, render_template, request
-from ..forms import LoginForm
+from ..forms import CreateRoomForm
 
 index_views = Blueprint('index', __name__, template_folder='templates')
 
 
-@index_views.route('/', methods=['GET', 'POST'])
+@index_views.route('/')
 def index():
+    return render_template('index.html')
+
+@index_views.route('/create-room', methods=['GET', 'POST'])
+def create_room():
     """Login form to enter a room."""
-    form = LoginForm()
+    form = CreateRoomForm()
     if form.validate_on_submit():
         session['name'] = form.name.data
         session['room'] = form.room.data
-        return redirect(url_for('.checkers'))
+        return redirect(url_for('.chat'))
     elif request.method == 'GET':
         form.name.data = session.get('name', '')
         form.room.data = session.get('room', '')
-    return render_template('index.html', form=form)
+    return render_template('create_room.html', form=form)
 
-@index_views.route('/checkers')
-def checkers():
+@index_views.route('/chat')
+def chat():
     name = session.get('name', '')
     room = session.get('room', '')
     if name == '' or room == '':
         return redirect(url_for('.index'))
-    return render_template('checkers.html', name=name, room=room)
+    return render_template('base_game.html', name=name, room=room)

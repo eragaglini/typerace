@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Create Room</h1>
+<form method="POST">
+{% import "bootstrap/wtf.html" as wtf %} {{ wtf.quick_form(form) }}
+</form>
+{% endblock %}
