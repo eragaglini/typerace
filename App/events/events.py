@@ -1,16 +1,18 @@
 from flask import session
-from flask_socketio import emit, join_room, leave_room
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room, leave_room, send
 
 socketio = SocketIO()
 
-@socketio.on('joined', namespace='/chat')
-def joined(message):
-    """Sent by clients when they enter a room.
-    A status message is broadcast to all people in the room."""
+@socketio.on('join', namespace='/chat')
+def on_join(data):
+    """User joins a room"""
+
+    username = session.get('name')
     room = session.get('room')
     join_room(room)
-    emit('status', {'msg': session.get('name') + ' has entered the room.'}, room=room)
+
+    # Broadcast that new user has joined
+    send({"msg": username + " has joined the " + room + " room."}, room=room)
 
 
 @socketio.on('text', namespace='/chat')
@@ -21,11 +23,11 @@ def text(message):
     emit('message', {'msg': session.get('name') + ':' + message['msg']}, room=room)
 
 
-@socketio.on('left', namespace='/chat')
-def left(message):
-    """Sent by clients when they leave a room.
-    A status message is broadcast to all people in the room."""
+@socketio.on('leave', namespace='/chat')
+def on_leave(data):
+    """User leaves a room"""
+    username = session.get('name')
     room = session.get('room')
     leave_room(room)
-    emit('status', {'msg': session.get('name') + ' has left the room.'}, room=room)
+    send({"msg": username + ' has left the room.'}, to=room)
     

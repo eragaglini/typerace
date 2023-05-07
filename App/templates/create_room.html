@@ -1,7 +1,17 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>Create Room</h1>
-<form method="POST">
-{% import "bootstrap/wtf.html" as wtf %} {{ wtf.quick_form(form) }}
-</form>
+
+    <h1>Create Room</h1>
+    
+    <form method="POST" style="max-width: 330px; margin: 0 auto;">
+
+    {% for error in errors %} 
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endfor %}
+
+    {% import "bootstrap/wtf.html" as wtf %} {{ wtf.quick_form(form) }}
+    </form>
+
 {% endblock %}

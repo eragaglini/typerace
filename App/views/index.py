@@ -1,5 +1,7 @@
-from flask import Blueprint, session, redirect, url_for, render_template, request
-from ..forms import CreateRoomForm
+from flask import Blueprint, session, redirect, url_for, render_template, request, flash
+from ..forms import CreateRoomForm, JoinRoomForm
+
+from ..events import socketio
 
 index_views = Blueprint('index', __name__, template_folder='templates')
 
@@ -20,6 +22,21 @@ def create_room():
         form.name.data = session.get('name', '')
         form.room.data = session.get('room', '')
     return render_template('create_room.html', form=form)
+
+
+@index_views.route('/join', methods=['GET', 'POST'])
+def join_room():
+    """Login form to enter a room."""
+    form = JoinRoomForm()
+    errors = []
+    if form.validate_on_submit():
+        session['name'] = form.name.data
+        session['room'] = form.room.data
+        return redirect(url_for('.chat'))
+    elif request.method == 'GET':
+        form.name.data = session.get('name', '')
+        form.room.data = session.get('room', '')
+    return render_template('create_room.html', form=form, errors=errors)
 
 @index_views.route('/chat')
 def chat():

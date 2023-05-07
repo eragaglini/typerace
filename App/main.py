@@ -27,7 +27,7 @@ def create_app(config_overrides={}):
     app.config["TEMPLATES_AUTO_RELOAD"] = True
     app.config["SEVER_NAME"] = "0.0.0.0"
     app.config["PREFERRED_URL_SCHEME"] = "https"
-    bootstrap = Bootstrap(app)
+    Bootstrap(app)
     CORS(app)
     add_views(app)
     app.app_context().push()

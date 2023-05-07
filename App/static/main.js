@@ -2,7 +2,7 @@ var socket;
 $(document).ready(function(){
     socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
     socket.on('connect', function() {
-        socket.emit('joined', {});
+        socket.emit('join', {'username': "test"});
     });
     socket.on('status', function(data) {
         $('#chat').val($('#chat').val() + '<' + data.msg + '>\n');
@@ -20,11 +20,10 @@ $(document).ready(function(){
             socket.emit('text', {msg: text});
         }
     });
-});
 
-function leave_room() {
-    socket.emit('left', {}, function() {
-        socket.disconnect();
+    $('#leave').click(function(e) {
+        socket.emit('leave', {});
         window.location.href = "/";
     });
-}
+
+});
