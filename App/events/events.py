@@ -3,6 +3,8 @@ from flask_socketio import SocketIO, emit, join_room, leave_room, send
 
 socketio = SocketIO()
 
+rooms = {}
+
 @socketio.on('join', namespace='/chat')
 def on_join(data):
     """User joins a room"""

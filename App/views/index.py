@@ -1,7 +1,8 @@
 from flask import Blueprint, session, redirect, url_for, render_template, request, flash
 from ..forms import CreateRoomForm, JoinRoomForm
 
-from ..events import socketio
+from ..events import socketio, rooms
+
 
 index_views = Blueprint('index', __name__, template_folder='templates')
 
@@ -21,6 +22,7 @@ def create_room():
     elif request.method == 'GET':
         form.name.data = session.get('name', '')
         form.room.data = session.get('room', '')
+
     return render_template('create_room.html', form=form)
 
 

@@ -20,10 +20,15 @@ $(document).ready(function(){
             socket.emit('text', {msg: text});
         }
     });
-
-    $('#leave').click(function(e) {
-        socket.emit('leave', {});
-        window.location.href = "/";
-    });
+    
+    $('#leave').click(() => leave_room());
 
 });
+
+function leave_room() {
+    socket.emit('leave', {}, function() {
+        socket.disconnect();
+        // go back to the main page
+        window.location.href = "/";
+    });
+}
