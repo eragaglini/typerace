@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
 
-    <h1>Create Room</h1>
+    {% block header %}
+    <h1>{{ mode |title }} Room</h1>
+    {% endblock %}
     
     <form method="POST" style="max-width: 330px; margin: 0 auto;">
 

@@ -12,6 +12,9 @@ $(document).ready(function(){
         $('#chat').val($('#chat').val() + data.msg + '\n');
         $('#chat').scrollTop($('#chat')[0].scrollHeight);
     });
+    socket.on('redirect', function (data) {
+        window.location = data.url;
+    });
     $('#text').keypress(function(e) {
         var code = e.keyCode || e.which;
         if (code == 13) {
@@ -21,14 +24,11 @@ $(document).ready(function(){
         }
     });
     
-    $('#leave').click(() => leave_room());
-
-});
-
-function leave_room() {
-    socket.emit('leave', {}, function() {
-        socket.disconnect();
-        // go back to the main page
-        window.location.href = "/";
+    $('#leave').click(function(e) {
+        socket.emit('leave', {}, function() {
+            socket.disconnect();
+            // go back to the main page
+            window.location.href = "/";
+        });
     });
-}
+});

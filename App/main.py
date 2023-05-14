@@ -22,6 +22,7 @@ def configure_app(app, config, overrides):
 
 def create_app(config_overrides={}):
     app = Flask(__name__, static_url_path="/static")
+    app.url_map.strict_slashes = False
     socketio.init_app(app)
     configure_app(app, config, config_overrides)
     app.config["TEMPLATES_AUTO_RELOAD"] = True

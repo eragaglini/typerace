@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block table %}
+<h1 class="display-4" style="text-align: center; padding-top: 5%;">Browse Rooms</h1>
+<h3 class="d-none d-lg-block" style="padding-bottom: 5%; text-align: center;">
+    Find your friends room,
+    <small class="text-muted">or take a gamble and join a random persons room ( ͡° ͜ʖ
+    ͡°).</small>
+</h3>
+<div class="row">
+    <div class="col-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Join</th>
+                    <th scope="col">Room Name</th>
+                    <th scope="col">Players</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if rooms |count > 0 %}
+                {% for k,v in rooms.items() %}
+                <tr>
+                    <th scope="row">1</th>
+                    <td>
+                        <a href="{{ url_for('index.join_room', room_code=v.id ) }}/" class="btn btn-primary">Join</a>
+                    </td>
+                    <td>{{ v.name }}</td>
+                    <td>{{ v.users_num }}</td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                  <td class="text-center" colspan="4">No rooms available !</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
