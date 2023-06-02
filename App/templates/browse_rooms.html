@@ -20,14 +20,14 @@
             </thead>
             <tbody>
                 {% if rooms |count > 0 %}
-                {% for k,v in rooms.items() %}
+                {% for room in rooms %}
                 <tr>
                     <th scope="row">1</th>
                     <td>
-                        <a href="{{ url_for('index.join_room', room_code=v.id ) }}/" class="btn btn-primary">Join</a>
+                        <a href="{{ url_for('index.join_room', room_code=room['id'] ) }}/" class="btn btn-primary">Join</a>
                     </td>
-                    <td>{{ v.name }}</td>
-                    <td>{{ v.users_num }}</td>
+                    <td>{{ room['name'] }}</td>
+                    <td>{{ room['users_num'] }}</td>
                 </tr>
                 {% endfor %}
                 {% else %}

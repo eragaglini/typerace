@@ -57,7 +57,7 @@ def join_room(room_code=False):
         session["room"] = (
             form.room.data
             if get_room_by_name(form.room.data)
-            else get_room_by_id(form.room.data)
+            else get_room_by_id(form.room.data)['name']
         )
         if session["room"]:
             return redirect(url_for(".chat"))

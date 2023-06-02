@@ -20,7 +20,7 @@ def add_room(room):
 
 
 def remove_room(room):
-    rooms.remove(room)
+    rooms[:] = [d for d in rooms if d.get('id') != room['id']]
 
 
 @socketio.on("join", namespace="/chat")
@@ -56,9 +56,9 @@ def on_leave(data):
     room_name = session.get("room")
 
     room = get_room_by_name(session.get("room"))
-    rooms["users_num"] -= 1
-    if rooms["users_num"] == 0:
-        rooms.remove(room)
+    room["users_num"] -= 1
+    if room["users_num"] == 0:
+        remove_room(room=room)
 
     leave_room(room_name)
     send({"msg": username + " has left the room."}, to=room_name)
