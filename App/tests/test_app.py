@@ -1,5 +1,5 @@
 from App.main import create_app
-from App.events import rooms
+from App.events import rooms, get_room_by_name
 import pytest
 from flask import request, url_for
 
@@ -40,4 +40,4 @@ def test_create_room(client):
         assert len(response.history) == 1
         assert response.request.path == url_for(".chat")
         assert len(rooms) == 1
-        assert "testroom" in rooms
+        assert get_room_by_name("testroom") is not None

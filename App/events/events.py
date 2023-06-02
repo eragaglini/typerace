@@ -1,27 +1,44 @@
 from flask import session, url_for
 from flask_socketio import SocketIO, emit, join_room, leave_room, send
+from first import first
 
 socketio = SocketIO()
 
-rooms = {}
+rooms = []
+
+
+def get_room_by_name(name):
+    return first(rooms, key=lambda item: item["name"] == name)
+
+
+def get_room_by_id(id):
+    return first(rooms, key=lambda item: item["id"] == id)
+
+
+def add_room(room):
+    rooms.append(room)
+
+
+def remove_room(room):
+    rooms.remove(room)
 
 
 @socketio.on("join", namespace="/chat")
 def on_join(data):
     """User joins a room"""
-    if session.get("room") not in rooms:
-        emit('redirect', {'url': url_for('index.index')})
+    room = get_room_by_name(session.get("room"))
+    if not room:
+        emit("redirect", {"url": url_for("index.index")})
         return
+    else:
+        room["users_num"] += 1
 
     username = session.get("name")
-    room = session.get("room")
-    join_room(room)
-
-    if room in rooms:
-        rooms[room].users_num += 1
+    room_name = session.get("room")
+    join_room(room_name)
 
     # Broadcast that new user has joined
-    send({"msg": username + " has joined the " + room + " room."}, room=room)
+    send({"msg": username + " has joined the " + room_name + " room."}, room=room_name)
 
 
 @socketio.on("text", namespace="/chat")
@@ -36,11 +53,12 @@ def text(message):
 def on_leave(data):
     """User leaves a room"""
     username = session.get("name")
-    room = session.get("room")
+    room_name = session.get("room")
 
-    rooms[room].users_num -= 1
-    if rooms[room].users_num == 0:
-        del rooms[room]
+    room = get_room_by_name(session.get("room"))
+    rooms["users_num"] -= 1
+    if rooms["users_num"] == 0:
+        rooms.remove(room)
 
-    leave_room(room)
-    send({"msg": username + " has left the room."}, to=room)
+    leave_room(room_name)
+    send({"msg": username + " has left the room."}, to=room_name)

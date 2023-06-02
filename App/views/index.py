@@ -2,16 +2,17 @@ from flask import Blueprint, session, redirect, url_for, render_template, reques
 from ..forms import CreateRoomForm, JoinRoomForm
 
 from ..events.room import Room
-from ..events.events import socketio, rooms
+from ..events.events import (
+    get_room_by_id,
+    get_room_by_name,
+    add_room,
+    remove_room,
+    rooms,
+)
+import uuid
 
 
 index_views = Blueprint("index", __name__, template_folder="templates")
-
-def search_room_by_id(id):
-    for k, v in rooms.items():
-        if v.id == id:
-            return v.name
-    return ""
 
 
 @index_views.route("/")
@@ -27,11 +28,11 @@ def create_room():
     if form.validate_on_submit():
         session["name"] = form.name.data
         session["room"] = form.room.data
-        room = Room(session["room"])
+        room = {"id": str(uuid.uuid4())[:5], "name": form.room.data, "users_num": 0}
 
-        if room.name not in rooms:
+        if not get_room_by_name(room["name"]):
             # appending the newly created room to the rooms global variable
-            rooms[room.name] = room
+            add_room(room=room)
             return redirect(url_for(".chat"))
         else:
             errors.append("Room {0} already exist!".format(session["room"]))
@@ -44,15 +45,20 @@ def create_room():
 
     return render_template("join_room.html", mode="create", form=form, errors=errors)
 
+
 @index_views.route("/join", methods=["GET", "POST"])
-@index_views.route('/join/<room_code>', methods=["GET", "POST"])
-def join_room(room_code = False):
+@index_views.route("/join/<room_code>", methods=["GET", "POST"])
+def join_room(room_code=False):
     """Login form to enter a room."""
     form = JoinRoomForm()
     errors = []
     if form.validate_on_submit():
         session["name"] = form.name.data
-        session["room"] = form.room.data if form.room.data in rooms else search_room_by_id(form.room.data)
+        session["room"] = (
+            form.room.data
+            if get_room_by_name(form.room.data)
+            else get_room_by_id(form.room.data)
+        )
         if session["room"]:
             return redirect(url_for(".chat"))
         else:
@@ -71,7 +77,7 @@ def join_room(room_code = False):
 def chat():
     name = session.get("name", "")
     room = session.get("room", "")
-    if name == "" or room == "" or room not in rooms:
+    if name == "" or room == "" or not get_room_by_name(room):
         return redirect(url_for(".index"))
     return render_template("base_game.html", name=name, room=room)
 
