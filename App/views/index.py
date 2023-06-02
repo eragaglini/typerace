@@ -1,7 +1,6 @@
 from flask import Blueprint, session, redirect, url_for, render_template, request, flash
 from ..forms import CreateRoomForm, JoinRoomForm
 
-from ..events.room import Room
 from ..events.events import (
     get_room_by_id,
     get_room_by_name,
@@ -57,7 +56,7 @@ def join_room(room_code=False):
         session["room"] = (
             form.room.data
             if get_room_by_name(form.room.data)
-            else get_room_by_id(form.room.data)['name']
+            else get_room_by_id(form.room.data)["name"]
         )
         if session["room"]:
             return redirect(url_for(".chat"))
@@ -78,7 +77,9 @@ def chat():
     name = session.get("name", "")
     room = session.get("room", "")
     if name == "" or room == "" or not get_room_by_name(room):
+        print("REDIRECT")
         return redirect(url_for(".index"))
+    print(name, room, rooms)
     return render_template("base_game.html", name=name, room=room)
 
 

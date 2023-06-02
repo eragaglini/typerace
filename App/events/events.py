@@ -20,7 +20,7 @@ def add_room(room):
 
 
 def remove_room(room):
-    rooms[:] = [d for d in rooms if d.get('id') != room['id']]
+    rooms[:] = [d for d in rooms if d.get("id") != room["id"]]
 
 
 @socketio.on("join", namespace="/chat")

@@ -1,7 +1,7 @@
 from App.main import create_app
 from App.events import rooms, get_room_by_name
 import pytest
-from flask import request, url_for
+from flask import url_for
 
 # run tests with: pytest path-to-test-folder -W ignore::DeprecationWarning
 
@@ -10,12 +10,12 @@ from flask import request, url_for
 def app():
     app = create_app()
     app.config["WTF_CSRF_ENABLED"] = False
-    return app
+    yield app
 
 
 @pytest.fixture(scope="module")
 def client(app):
-    return app.test_client()
+    yield app.test_client()
 
 
 def test_index_route(client):
